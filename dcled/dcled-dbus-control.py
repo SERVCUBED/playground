@@ -16,7 +16,7 @@ ps = None
 
 def show(text):
     global ps
-    if ps is not None and ps.returncode is not None:
+    if ps is not None and ps.poll() is None:
         return
     ps = Popen(["sudo", "showdcledmessage", text])
 
