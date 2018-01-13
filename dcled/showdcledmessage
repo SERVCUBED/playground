@@ -1,0 +1,2 @@
+#!/bin/sh
+dcled -p 6 -b 0 -s 50 -m "$@"

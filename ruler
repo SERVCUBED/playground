@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Draws a ruler the width of the terminal window
+
+R= T=-
+r=$(set -- $(stty size);echo $2)\*2
+
+while
+	let 'r=r/2'
+do
+	let 'r&1' && R="$R$T"
+	T="$T$T"
+done
+
+echo "$R"
