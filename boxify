@@ -1,0 +1,93 @@
+#!/usr/bin/python3
+
+# Wrap input in an ASCII box
+
+def boxify(text, maxtextwidth=80, wrapchar=' '):
+    # Tabs mess with formatting. Let's remove them.
+    text = text.replace('\t', '    ')
+
+    lines = text.split('\n')
+
+    for i in range(0, len(lines)):
+
+        if len(lines[i]) > maxtextwidth:
+            if wrapchar is not None and wrapchar in lines[i][:maxtextwidth]:
+                # Get last occurrence of wrapchar that's in bounds
+                wt = lines[i][:maxtextwidth].rfind(wrapchar)
+            else:
+                wt = maxtextwidth
+            lines.insert(i+1, lines[i][wt:])
+            lines[i] = lines[i][:wt]
+
+    maxlinelen = 0
+    for line in lines:
+        ll = len(line)
+        if ll > maxlinelen:
+            maxlinelen = ll
+    if maxlinelen < maxtextwidth:
+        maxtextwidth = maxlinelen
+
+    # Pad all lines
+    for i in range(0, len(lines)):
+        # +2 to account for padding spaces
+        lines[i] = "| " + lines[i] + " " * (maxtextwidth + 2 - len(lines[i])) + " |"
+
+    out = "+" + "-" * (maxtextwidth + 4) + "+\n"
+    out += '\n'.join(lines)
+    out += "\n+" + "-" * (maxtextwidth + 4) + "+\n"
+
+    return out
+
+
+if __name__ == '__main__':
+    import sys
+
+    lin = ""
+    maxtextwidth = 80
+    wrapchar = ' '
+
+    sys.argv.pop(0)  # Remove filename
+    for arg in sys.argv:
+        if arg.startswith('--maxtextwidth='):
+            maxtextwidth = int(arg[15:])
+
+        elif arg.startswith('--maxwidth='):
+            maxtextwidth = int(arg[11:]) - 4
+
+        elif arg.startswith('--wrapchar='):
+            i = arg[11:]
+            wrapchar = None if len(i) == 0 else i
+
+        elif arg in ['--help', '-h', '-?', '--h']:
+            print("boxify.py: usage: [--maxtextwidth=80] [-maxwidth=84] [--wrapchar= ] \\"
+                  "\n  [--help|-h|-?|--h] input..."
+                  "\nUse '--wrapchar=' to disable wrapping. Accepts STDIN when "
+                  "\nthere's no input argument.")
+            exit(0)
+        else:
+            lin += " " * (len(lin) > 0) + arg
+
+    if maxtextwidth <= 4:
+        print("Maxtextwidth too short :(")
+        exit(1)
+
+    if len(lin) == 0:
+        while 1:
+            try:
+                line = sys.stdin.readline()
+            except KeyboardInterrupt:
+                break
+
+            if not line:
+                break
+            lin += line
+        if len(lin) == 0:
+            print("No data")
+            exit(1)
+        if lin[-1] == '\n':
+            lin = lin[:-1]
+
+    #if lin[0] in ['\n', ' ']:
+    #    lin = lin[1:]
+
+    print(boxify(lin, maxtextwidth, wrapchar))
