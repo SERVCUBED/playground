@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = firefox-developer-edition
+
+[Action]
+When = PostTransaction
+Exec = /home/servc/git/my/playground/firefox-gtk-fix/firefox-fix-dev-edition.sh
+Description = Fixing GTK styles...
