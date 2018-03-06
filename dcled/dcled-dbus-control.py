@@ -7,6 +7,7 @@ except ImportError:
 
 import sys
 import dbus
+import threading
 from subprocess import Popen
 from dbus.mainloop.glib import DBusGMainLoop
 
@@ -14,11 +15,15 @@ from dbus.mainloop.glib import DBusGMainLoop
 ps = None
 
 
-def show(text):
+def tshow(text):
     global ps
     if ps is not None and ps.poll() is None:
         return
     ps = Popen(["sudo", "showdcledmessage", text])
+
+
+def show(text):
+    threading.Thread(target=tshow, args=[text]).start()
 
 
 def notifications(bus, message):
