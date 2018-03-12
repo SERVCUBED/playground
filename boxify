@@ -59,7 +59,7 @@ if __name__ == '__main__':
             wrapchar = None if len(i) == 0 else i
 
         elif arg in ['--help', '-h', '-?', '--h']:
-            print("boxify.py: usage: [--maxtextwidth=80] [-maxwidth=84] [--wrapchar= ] \\"
+            print("boxify.py: usage: [--maxtextwidth=80] [--maxwidth=84] [--wrapchar= ] \\"
                   "\n  [--help|-h|-?|--h] input..."
                   "\nUse '--wrapchar=' to disable wrapping. Accepts STDIN when "
                   "\nthere's no input argument.")
