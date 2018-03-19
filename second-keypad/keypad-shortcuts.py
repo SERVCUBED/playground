@@ -82,7 +82,6 @@ elif arg == "leftkey" and len(sys.argv) == 3:
 elif arg == "switchtomain":
     # Cycle through windows at the top left of the main monitor
     active = screen.get_active_window()
-    # Focus whatever window is on the main monitor and behind others
     ws = [w for w in screen.get_windows() if ismainmonitorwindow(w)]
 
     if active in ws:
