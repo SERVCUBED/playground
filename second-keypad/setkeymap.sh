@@ -1,4 +1,11 @@
 #!/bin/bash
 
-id=`xinput list | grep "SEM USB Keyboard" | sed -n 's/.*id=\([0-9]\+\).*/\1/p' | tail -n 1`
-xkbcomp -i $id second-keypad/keymap.xkb $DISPLAY
+r_id=$(
+    xinput list |
+    sed -n 's/.*SEM.*id=\([0-9]*\).*keyboard.*/\1/p'
+)
+[ "$r_id" ] || exit
+
+for r in $r_id; do
+    xkbcomp -i $r keymap.xkb $DISPLAY
+done

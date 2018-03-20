@@ -2,7 +2,7 @@ xkb_keymap {
 xkb_keycodes "evdev+aliases(qwerty)" {
     minimum = 8;
     maximum = 255;
-     <ESC> = 9;
+     <ESC> = 77;
     <AE01> = 10;
     <AE02> = 11;
     <AE03> = 12;
@@ -56,7 +56,6 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <AB09> = 60;
     <AB10> = 61;
     <RTSH> = 62;
-    <KPMU> = 63;
     <LALT> = 64;
     <SPCE> = 65;
     <CAPS> = 66;
@@ -70,21 +69,7 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <FK08> = 74;
     <FK09> = 75;
     <FK10> = 76;
-    <NMLK> = 77;
     <SCLK> = 78;
-     <KP7> = 79;
-     <KP8> = 80;
-     <KP9> = 81;
-    <KPSU> = 82;
-     <KP4> = 83;
-     <KP5> = 84;
-     <KP6> = 85;
-    <KPAD> = 86;
-     <KP1> = 87;
-     <KP2> = 88;
-     <KP3> = 89;
-     <KP0> = 90;
-    <KPDL> = 91;
     <LVL3> = 92;
     <LSGT> = 94;
     <FK11> = 95;
@@ -96,9 +81,7 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <HKTG> = 101;
     <MUHE> = 102;
     <JPCM> = 103;
-    <KPEN> = 104;
     <RCTL> = 105;
-    <KPDV> = 106;
     <PRSC> = 107;
     <RALT> = 108;
     <LNFD> = 109;
@@ -117,11 +100,9 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <VOL-> = 122;
     <VOL+> = 123;
     <POWR> = 124;
-    <KPEQ> = 125;
     <I126> = 126;
     <PAUS> = 127;
     <I128> = 128;
-    <I129> = 129;
     <HNGL> = 130;
     <HJCV> = 131;
     <AE13> = 132;
@@ -185,45 +166,30 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <I190> = 190;
     <FK13> = 191;
     <FK14> = 192;
-    <FK15> = 193;
-    <FK16> = 194;
-    <FK17> = 195;
-    <FK18> = 196;
-    <FK19> = 197;
+    <FK15> = 86;
+    <FK16> = 82;
+    <FK17> = 83;
+    <FK18> = 81;
     <FK20> = 198;
-    <FK21> = 199;
-    <FK22> = 200;
-    <FK23> = 201;
-    <FK24> = 202;
     <MDSW> = 203;
      <ALT> = 204;
     <META> = 205;
     <SUPR> = 206;
     <HYPR> = 207;
-    <I208> = 208;
-    <I209> = 209;
-    <I210> = 210;
-    <I211> = 211;
-    <I212> = 212;
-    <I213> = 213;
-    <I214> = 214;
-    <I215> = 215;
-    <I216> = 216;
-    <I217> = 217;
-    <I218> = 218;
-    <I219> = 219;
-    <I220> = 220;
-    <I221> = 221;
-    <I222> = 222;
-    <I223> = 223;
-    <I224> = 224;
-    <I225> = 225;
-    <I226> = 226;
-    <I227> = 227;
-    <I228> = 228;
-    <I229> = 229;
-    <I230> = 230;
-    <I231> = 231;
+    <I211> = 84;
+    <I212> = 63;
+    <I213> = 79;
+    <I214> = 80;
+    <I220> = 85;
+    <I223> = 87;
+    <I224> = 88;
+    <I225> = 89;
+    <I226> = 90;
+    <I227> = 91;
+    <I228> = 104;
+    <I229> = 106;
+    <I230> = 125;
+    <I231> = 129;
     <I232> = 232;
     <I233> = 233;
     <I234> = 234;
@@ -803,7 +769,126 @@ xkb_compatibility "complete" {
     interpret ISO_Last_Group+AnyOfOrNone(all) {
         action= LockGroup(group=2);
     };
-
+    interpret KP_1+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=-1,y=+1);
+    };
+    interpret KP_End+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=-1,y=+1);
+    };
+    interpret KP_2+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+0,y=+1);
+    };
+    interpret KP_Down+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+0,y=+1);
+    };
+    interpret KP_3+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+1,y=+1);
+    };
+    interpret KP_Next+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+1,y=+1);
+    };
+    interpret KP_4+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=-1,y=+0);
+    };
+    interpret KP_Left+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=-1,y=+0);
+    };
+    interpret KP_6+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+1,y=+0);
+    };
+    interpret KP_Right+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+1,y=+0);
+    };
+    interpret KP_7+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=-1,y=-1);
+    };
+    interpret KP_Home+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=-1,y=-1);
+    };
+    interpret KP_8+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+0,y=-1);
+    };
+    interpret KP_Up+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+0,y=-1);
+    };
+    interpret KP_9+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+1,y=-1);
+    };
+    interpret KP_Prior+AnyOfOrNone(all) {
+        repeat= True;
+        action= MovePtr(x=+1,y=-1);
+    };
+    interpret KP_5+AnyOfOrNone(all) {
+        repeat= True;
+        action= PtrBtn(button=default);
+    };
+    interpret KP_Begin+AnyOfOrNone(all) {
+        repeat= True;
+        action= PtrBtn(button=default);
+    };
+    interpret KP_F2+AnyOfOrNone(all) {
+        repeat= True;
+        action= SetPtrDflt(affect=button,button=1);
+    };
+    interpret KP_Divide+AnyOfOrNone(all) {
+        repeat= True;
+        action= SetPtrDflt(affect=button,button=1);
+    };
+    interpret KP_F3+AnyOfOrNone(all) {
+        repeat= True;
+        action= SetPtrDflt(affect=button,button=2);
+    };
+    interpret KP_Multiply+AnyOfOrNone(all) {
+        repeat= True;
+        action= SetPtrDflt(affect=button,button=2);
+    };
+    interpret KP_F4+AnyOfOrNone(all) {
+        repeat= True;
+        action= SetPtrDflt(affect=button,button=3);
+    };
+    interpret KP_Subtract+AnyOfOrNone(all) {
+        repeat= True;
+        action= SetPtrDflt(affect=button,button=3);
+    };
+    interpret KP_Separator+AnyOfOrNone(all) {
+        repeat= True;
+        action= PtrBtn(button=default,count=2);
+    };
+    interpret KP_Add+AnyOfOrNone(all) {
+        repeat= True;
+        action= PtrBtn(button=default,count=2);
+    };
+    interpret KP_0+AnyOfOrNone(all) {
+        repeat= True;
+        action= LockPtrBtn(button=default,affect=lock);
+    };
+    interpret KP_Insert+AnyOfOrNone(all) {
+        repeat= True;
+        action= LockPtrBtn(button=default,affect=lock);
+    };
+    interpret KP_Decimal+AnyOfOrNone(all) {
+        repeat= True;
+        action= LockPtrBtn(button=default,affect=unlock);
+    };
+    interpret KP_Delete+AnyOfOrNone(all) {
+        repeat= True;
+        action= LockPtrBtn(button=default,affect=unlock);
+    };
     interpret F25+AnyOfOrNone(all) {
         repeat= True;
         action= SetPtrDflt(affect=button,button=1);
@@ -1326,7 +1411,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     key <RTSH> {         [         Shift_R ] };
     key <KPMU> {
         type= "CTRL+ALT",
-        symbols[Group1]= [     F18 ]
+        symbols[Group1]= [     KP_Multiply,     KP_Multiply,     KP_Multiply,     KP_Multiply,   XF86ClearGrab ]
     };
     key <LALT> {         [           Alt_L,          Meta_L ] };
     key <SPCE> {         [           space ] };
@@ -1371,27 +1456,27 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
         type= "CTRL+ALT",
         symbols[Group1]= [             F10,             F10,             F10,             F10, XF86Switch_VT_10 ]
     };
-    key <NMLK> {         [        Escape ] };
+    key <NMLK> {         [        Num_Lock ] };
     key <SCLK> {         [     Scroll_Lock ] };
-    key  <KP7> {         [         KP_Home ] };
-    key  <KP8> {         [           KP_Up ] };
-    key  <KP9> {         [        KP_Prior ] };
+    key  <KP7> {         [         KP_Home,            KP_7 ] };
+    key  <KP8> {         [           KP_Up,            KP_8 ] };
+    key  <KP9> {         [        KP_Prior,            KP_9 ] };
     key <KPSU> {
         type= "CTRL+ALT",
-        symbols[Group1]= [     F19 ]
+        symbols[Group1]= [     KP_Subtract,     KP_Subtract,     KP_Subtract,     KP_Subtract,  XF86Prev_VMode ]
     };
-    key  <KP4> {         [         KP_Left ] };
-    key  <KP5> {         [        KP_Begin ] };
-    key  <KP6> {         [        KP_Right ] };
+    key  <KP4> {         [         KP_Left,            KP_4 ] };
+    key  <KP5> {         [        KP_Begin,            KP_5 ] };
+    key  <KP6> {         [        KP_Right,            KP_6 ] };
     key <KPAD> {
         type= "CTRL+ALT",
-        symbols[Group1]= [          F20 ]
+        symbols[Group1]= [          KP_Add,          KP_Add,          KP_Add,          KP_Add,  XF86Next_VMode ]
     };
-    key  <KP1> {         [          KP_End ] };
-    key  <KP2> {         [         KP_Down ] };
-    key  <KP3> {         [         KP_Next ] };
-    key  <KP0> {         [       KP_Insert ] };
-    key <KPDL> {         [       F16 ] };
+    key  <KP1> {         [          KP_End,            KP_1 ] };
+    key  <KP2> {         [         KP_Down,            KP_2 ] };
+    key  <KP3> {         [         KP_Next,            KP_3 ] };
+    key  <KP0> {         [       KP_Insert,            KP_0 ] };
+    key <KPDL> {         [       KP_Delete,      KP_Decimal ] };
     key <LVL3> {
         type= "ONE_LEVEL",
         symbols[Group1]= [ ISO_Level3_Shift ]
@@ -1417,7 +1502,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     key <RCTL> {         [       Control_R ] };
     key <KPDV> {
         type= "CTRL+ALT",
-        symbols[Group1]= [       F17 ]
+        symbols[Group1]= [       KP_Divide,       KP_Divide,       KP_Divide,       KP_Divide,      XF86Ungrab ]
     };
     key <PRSC> {
         type= "PC_ALT_LEVEL2",
@@ -1508,7 +1593,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     key <I190> {         [            Redo ] };
     key <FK13> {         [       XF86Tools ] };
     key <FK14> {         [     XF86Launch5 ] };
-    key <FK15> {         [     XF86Launch6 ] };
+    key <FK15> {         [     U203D ] };
     key <FK16> {         [     XF86Launch7 ] };
     key <FK17> {         [     XF86Launch8 ] };
     key <FK18> {         [     XF86Launch9 ] };
@@ -1560,6 +1645,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     modifier_map Shift { <RTSH> };
     modifier_map Mod1 { <LALT> };
     modifier_map Lock { <CAPS> };
+    modifier_map Mod2 { <NMLK> };
     modifier_map Mod5 { <LVL3> };
     modifier_map Control { <RCTL> };
     modifier_map Mod4 { <LWIN> };
