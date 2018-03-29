@@ -165,7 +165,7 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <I189> = 189;
     <I190> = 190;
     <FK13> = 191;
-    <FK14> = 192;
+    <FK14> = 79;
     <FK15> = 86;
     <FK16> = 82;
     <FK17> = 83;
@@ -178,7 +178,6 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <HYPR> = 207;
     <I211> = 84;
     <I212> = 63;
-    <I213> = 79;
     <I214> = 80;
     <I220> = 85;
     <I223> = 87;
