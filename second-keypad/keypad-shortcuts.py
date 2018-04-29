@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 
 # Keymap:
-# Escape    F17         18              F19
+# Escape    F17         F18             F19
 # KP_Home   KP_Up       KP_Page_Up      F20
 # KP_Left   KP_Begin    KP_Right        Backspace
 # KP_End    KP_Down     KP_Page_Down    KP_Enter
@@ -10,7 +10,7 @@
 # Functions:
 # Escape        Escape
 # F17           switchtomain
-# F18
+# F18           rofi windows
 # F19
 # KP_Home       rofi
 # KP_Up         leftkey Up
@@ -44,6 +44,11 @@ def ismainmonitorwindow(w):
     return x == mainposition[0] and y == mainposition[1]
 
 
+def isleftmonitorwindow(w):
+    x, y, = w.get_client_window_geometry()[:2]
+    return (x == 0 if w.is_maximized() else x == portraittopposition[0]) and y == portraittopposition[1]
+
+
 screen = wnck.screen_get_default()
 while gtk.events_pending():
     gtk.main_iteration()
@@ -65,8 +70,7 @@ if arg == "messengerfocus":
 elif arg == "leftfocus":
     # Focus the window on the leftmost (portrait) monitor
     for w in screen.get_windows():
-        x, y, = w.get_client_window_geometry()[:2]
-        if x == portraittopposition[0] and y == portraittopposition[1]:
+        if isleftmonitorwindow(w):
             w.activate(now)
             break
 elif arg == "leftkey" and len(sys.argv) == 3:
@@ -74,8 +78,7 @@ elif arg == "leftkey" and len(sys.argv) == 3:
     key = sys.argv[2]
 
     for w in screen.get_windows():
-        x, y, = w.get_client_window_geometry()[:2]
-        if x == portraittopposition[0] and y == portraittopposition[1]:
+        if isleftmonitorwindow(w):
             from subprocess import Popen
             Popen(['xdotool', 'key', '--window', str(w.get_xid()), key])
             break

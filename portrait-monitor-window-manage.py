@@ -39,10 +39,12 @@ if mode == 'list':
 active = screen.get_active_window()
 
 if mode == 'over':
+    active.unmaximize()
     active.set_geometry(0, 0b1111, bounds[0] + xoffset, bounds[1] + yoffset, bounds[2], int(bounds[3] * ratio))
     exit(0)
 
 if mode == 'under':
+    active.unmaximize()
     active.set_geometry(0, 0b1111, bounds[0] + xoffset, bounds[1] + int(bounds[3] * ratio) + yoffset, bounds[2],
                         int(bounds[3] * (1 - ratio)) + yoffset)
     exit(0)

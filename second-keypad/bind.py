@@ -23,6 +23,7 @@ keystrs = {"XF86Launch4": [py, "leftfocus"],
            "XF86Shop": [py, "switchtomain"],
            # "XF86LaunchB": [py, "switchtomain"],  # Temp
            "XF86Launch5": ["rofi", "-show", "drun", "-display-drun", "", "-fuzzy"],
+           "XF86LaunchB": ["rofi", "-show", "window", "-display-window", "", "-fuzzy", "-window-format", "{w}: {t}"],
            "XF86Launch7": ["xflock4"]}
 
 
