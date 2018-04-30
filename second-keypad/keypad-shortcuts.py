@@ -63,7 +63,7 @@ if arg == "messengerfocus":
     # Focus messenger window
     for w in screen.get_windows():
         n = w.get_name().lower()
-        print(n)
+        # print(n)
         if "messenger" in n or "message" in n:
             w.activate(now)
             break

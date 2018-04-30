@@ -55,6 +55,7 @@ if mode == 'total':
     exit(0)
 
 print('No or invalid mode')
+exit(1)
 
 
 # notitles = ['Desktop', 'xfce4-panel']
