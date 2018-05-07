@@ -20,7 +20,7 @@
 # KP_Begin      leftfocus
 # KP_Right      leftkey ctrl+Tab
 # Backspace     Backspace
-# KP_End
+# KP_End        mumblefocus
 # KP_Down       leftkey Down
 # KP_Page_Down  leftkey Page_Down
 # KP_Enter      KP_Enter
@@ -65,6 +65,14 @@ if arg == "messengerfocus":
         n = w.get_name().lower()
         # print(n)
         if "messenger" in n or "message" in n:
+            w.activate(now)
+            break
+elif arg == "mumblefocus":
+    # Focus messenger window
+    for w in screen.get_windows():
+        n = w.get_name()
+        # print(n)
+        if "Mumble --" in n:
             w.activate(now)
             break
 elif arg == "leftfocus":

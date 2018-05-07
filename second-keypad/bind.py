@@ -19,6 +19,7 @@ keystrs = {"XF86Launch4": [py, "leftfocus"],
            "XF86Search": [py, "leftkey", "Page_Down"],
            "XF86Launch9": [py, "leftkey", "Page_Up"],
            "XF86Close": [py, "leftkey", "Up"],
+           "XF86Mail": [py, "mumblefocus"],
            "XF86Go": [py, "messengerfocus"],
            "XF86Shop": [py, "switchtomain"],
            # "XF86LaunchB": [py, "switchtomain"],  # Temp
