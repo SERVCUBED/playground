@@ -47,10 +47,11 @@ def delayedsetlayout():
 
 
 if __name__ == '__main__':
-    keyboard.hook(handle_events)
+    # keyboard.hook(handle_events)
+    for keystr in keystrs.keys():
+        keyboard.hook_key(keystr, handle_events)
+        # print("Press", keystr, "to handle ", keystrs[keystr])
+
     threading.Thread(target=delayedsetlayout).start()
 
-    #for keystr in keystrs.keys():
-    #    keyboard.add_hotkey(keystr, callback, args=keystr)
-    #    print("Press", keystr, "to handle ", keystrs[keystr])
     keyboard.wait()
