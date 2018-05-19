@@ -1,48 +1,56 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gi
-
-gi.require_version('Gtk', '3.0')
-gi.require_version('Keybinder', '3.0')
-
-from gi.repository import Gtk
-from gi.repository import Keybinder
-from subprocess import Popen
+from subprocess import Popen, PIPE
 import threading
+import keyboard
+import time
 
+id = str(Popen(['readlink', '-f', '/dev/input/by-id/usb-SEM_USB_Keyboard-event-kbd'], stdout=PIPE).communicate()[0])[2:-3]
 py = "/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py"
-keystrs = {"XF86Launch4": [py, "leftfocus"],
-           "XF86Launch8": [py, "leftkey", "ctrl+shift+Tab"],
-           "XF86WebCam": [py, "leftkey", "ctrl+Tab"],
-           "XF86Messenger": [py, "leftkey", "Down"],
-           "XF86Search": [py, "leftkey", "Page_Down"],
-           "XF86Launch9": [py, "leftkey", "Page_Up"],
-           "XF86Close": [py, "leftkey", "Up"],
-           "XF86Mail": [py, "mumblefocus"],
-           "XF86Go": [py, "messengerfocus"],
-           "XF86Shop": [py, "switchtomain"],
+keystrs = {76: [py, "leftfocus"],
+           75: [py, "leftkey", "ctrl+shift+Tab"],
+           77: [py, "leftkey", "ctrl+Tab"],
+           80: [py, "leftkey", "Down"],
+           81: [py, "leftkey", "Page_Down"],
+           73: [py, "leftkey", "Page_Up"],
+           72: [py, "leftkey", "Up"],
+           79: [py, "mumblefocus"],
+           82: [py, "messengerfocus"],
+           98: [py, "switchtomain"],
            # "XF86LaunchB": [py, "switchtomain"],  # Temp
-           "XF86Launch5": ["rofi", "-show", "drun", "-display-drun", "", "-fuzzy"],
-           "XF86LaunchB": ["rofi", "-show", "window", "-display-window", "", "-fuzzy", "-window-format", "{w}: {t}"],
-           "XF86Launch7": ["xflock4"]}
+           71: ["rofi", "-show", "drun", "-display-drun", "", "-fuzzy"],
+           55: ["rofi", "-show", "window", "-display-window", "", "-fuzzy", "-window-format", "{w}: {t}"],
+           74: ["xflock4"]}
 
 
 def start(keystr):
     Popen(keystrs[keystr])
 
 
-def callback(keystr, user_data):
-    print("Handling", keystr, user_data)
-    print("Event time:", Keybinder.get_current_event_time())
+def callback(keystr):
+    print("Handling", keystr)
     threading.Thread(target=start, args=[keystr]).start()
 
 
-if __name__ == '__main__':
+def handle_events(args):
+    if not isinstance(args, keyboard.KeyboardEvent) or args.event_type != 'down' or args.device != id:
+            return
+    if args.scan_code in keystrs:
+        print(args.scan_code, args.device, args.event_type)
+        callback(args.scan_code)
+
+
+def delayedsetlayout():
+    time.sleep(1)
     Popen(["sh", "setkeymap.sh"])
-    Keybinder.init()
-    Keybinder.set_use_cooked_accelerators(True)
-    for keystr in keystrs.keys():
-        Keybinder.bind(keystr, callback, "Keystring %s (user data)" % keystr)
-        print("Press", keystr, "to handle ", keystrs[keystr])
-    Gtk.main()
+
+
+if __name__ == '__main__':
+    keyboard.hook(handle_events)
+    threading.Thread(target=delayedsetlayout).start()
+
+    #for keystr in keystrs.keys():
+    #    keyboard.add_hotkey(keystr, callback, args=keystr)
+    #    print("Press", keystr, "to handle ", keystrs[keystr])
+    keyboard.wait()
