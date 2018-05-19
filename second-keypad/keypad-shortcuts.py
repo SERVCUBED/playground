@@ -1,17 +1,17 @@
 #!/usr/bin/python2
 
 # Keymap:
-# Escape    F17         F18             F19
-# KP_Home   KP_Up       KP_Page_Up      F20
-# KP_Left   KP_Begin    KP_Right        Backspace
-# KP_End    KP_Down     KP_Page_Down    KP_Enter
-# KP_Insert KP_Insert   F16             KP_Enter
+# Escape        XF86Shop        XF86LaunchB     XF86Launch7
+# XF86Launch5   XF86Close       XF86Launch9     Interrobang
+# XF86Launch8   XF86Launch4     XF86WebCam      Backspace
+# XF86Mail      XF86Messenger   XF86Search      KP_Enter
+# XF86Go        XF86Go          KP_Delete       KP_Enter
 
 # Functions:
 # Escape        Escape
 # F17           switchtomain
 # F18           rofi windows
-# F19
+# F19           Interrobang
 # KP_Home       rofi
 # KP_Up         leftkey Up
 # KP_Page_Up    leftkey Page_Up

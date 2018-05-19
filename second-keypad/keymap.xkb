@@ -2,7 +2,7 @@ xkb_keymap {
 xkb_keycodes "evdev+aliases(qwerty)" {
     minimum = 8;
     maximum = 255;
-     <ESC> = 77;
+     <ESC> = 9;
     <AE01> = 10;
     <AE02> = 11;
     <AE03> = 12;
@@ -56,6 +56,7 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <AB09> = 60;
     <AB10> = 61;
     <RTSH> = 62;
+    <KPMU> = 63;
     <LALT> = 64;
     <SPCE> = 65;
     <CAPS> = 66;
@@ -69,7 +70,21 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <FK08> = 74;
     <FK09> = 75;
     <FK10> = 76;
+    <NMLK> = 77;
     <SCLK> = 78;
+     <KP7> = 79;
+     <KP8> = 80;
+     <KP9> = 81;
+    <KPSU> = 82;
+     <KP4> = 83;
+     <KP5> = 84;
+     <KP6> = 85;
+    <KPAD> = 86;
+     <KP1> = 87;
+     <KP2> = 88;
+     <KP3> = 89;
+     <KP0> = 90;
+    <KPDL> = 91;
     <LVL3> = 92;
     <LSGT> = 94;
     <FK11> = 95;
@@ -81,7 +96,9 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <HKTG> = 101;
     <MUHE> = 102;
     <JPCM> = 103;
+    <KPEN> = 104;
     <RCTL> = 105;
+    <KPDV> = 106;
     <PRSC> = 107;
     <RALT> = 108;
     <LNFD> = 109;
@@ -100,9 +117,11 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <VOL-> = 122;
     <VOL+> = 123;
     <POWR> = 124;
+    <KPEQ> = 125;
     <I126> = 126;
     <PAUS> = 127;
     <I128> = 128;
+    <I129> = 129;
     <HNGL> = 130;
     <HJCV> = 131;
     <AE13> = 132;
@@ -165,30 +184,46 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <I189> = 189;
     <I190> = 190;
     <FK13> = 191;
-    <FK14> = 79;
-    <FK15> = 86;
-    <FK16> = 82;
-    <FK17> = 83;
-    <FK18> = 81;
+    <FK14> = 192;
+    <FK15> = 193;
+    <FK16> = 194;
+    <FK17> = 195;
+    <FK18> = 196;
+    <FK19> = 197;
     <FK20> = 198;
+    <FK21> = 199;
+    <FK22> = 200;
+    <FK23> = 201;
+    <FK24> = 202;
     <MDSW> = 203;
      <ALT> = 204;
     <META> = 205;
     <SUPR> = 206;
     <HYPR> = 207;
-    <I211> = 84;
-    <I212> = 63;
-    <I214> = 80;
-    <I220> = 85;
-    <I223> = 87;
-    <I224> = 88;
-    <I225> = 89;
-    <I226> = 90;
-    <I227> = 91;
-    <I228> = 104;
-    <I229> = 106;
-    <I230> = 125;
-    <I231> = 129;
+    <I208> = 208;
+    <I209> = 209;
+    <I210> = 210;
+    <I211> = 211;
+    <I212> = 212;
+    <I213> = 213;
+    <I214> = 214;
+    <I215> = 215;
+    <I216> = 216;
+    <I217> = 217;
+    <I218> = 218;
+    <I219> = 219;
+    <I220> = 220;
+    <I221> = 221;
+    <I222> = 222;
+    <I223> = 223;
+    <I224> = 224;
+    <I225> = 225;
+    <I226> = 226;
+    <I227> = 227;
+    <I228> = 228;
+    <I229> = 229;
+    <I230> = 230;
+    <I231> = 231;
     <I232> = 232;
     <I233> = 233;
     <I234> = 234;
@@ -212,8 +247,8 @@ xkb_keycodes "evdev+aliases(qwerty)" {
     <I252> = 252;
     <I253> = 253;
     indicator 1 = "Caps Lock";
-    indicator 2 = "Num Lock";
-    indicator 3 = "Scroll Lock";
+    indicator 3 = "Num Lock";
+    indicator 2 = "Scroll Lock";
     indicator 4 = "Compose";
     indicator 5 = "Kana";
     indicator 6 = "Sleep";
@@ -283,8 +318,8 @@ xkb_types "complete" {
     };
     type "KEYPAD" {
         modifiers= Shift+NumLock;
-        map[Shift]= Level2;
-        map[NumLock]= Level2;
+        map[Shift]= Level1;
+        map[NumLock]= Level1;
         level_name[Level1]= "Base";
         level_name[Level2]= "Number";
     };
@@ -637,7 +672,7 @@ xkb_types "complete" {
     type "FOUR_LEVEL_KEYPAD" {
         modifiers= Shift+NumLock+LevelThree;
         map[Shift]= Level2;
-        map[NumLock]= Level2;
+        map[NumLock]= Level1;
         map[LevelThree]= Level3;
         map[Shift+LevelThree]= Level4;
         map[NumLock+LevelThree]= Level4;
@@ -1118,7 +1153,6 @@ xkb_compatibility "complete" {
         modifiers= Lock;
     };
     indicator "Num Lock" {
-        !allowExplicit;
         whichModState= locked;
         modifiers= NumLock;
     };
@@ -1410,7 +1444,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     key <RTSH> {         [         Shift_R ] };
     key <KPMU> {
         type= "CTRL+ALT",
-        symbols[Group1]= [     KP_Multiply,     KP_Multiply,     KP_Multiply,     KP_Multiply,   XF86ClearGrab ]
+        symbols[Group1]= [     XF86LaunchB,     XF86LaunchB,     KP_Multiply,     KP_Multiply,   XF86ClearGrab ]
     };
     key <LALT> {         [           Alt_L,          Meta_L ] };
     key <SPCE> {         [           space ] };
@@ -1455,26 +1489,26 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
         type= "CTRL+ALT",
         symbols[Group1]= [             F10,             F10,             F10,             F10, XF86Switch_VT_10 ]
     };
-    key <NMLK> {         [        Num_Lock ] };
+    key <NMLK> {         [        Escape,              Escape ] };
     key <SCLK> {         [     Scroll_Lock ] };
-    key  <KP7> {         [         KP_Home,            KP_7 ] };
-    key  <KP8> {         [           KP_Up,            KP_8 ] };
-    key  <KP9> {         [        KP_Prior,            KP_9 ] };
+    key  <KP7> {         [         XF86Launch5,            XF86Launch5 ] };
+    key  <KP8> {         [           XF86Close,            XF86Close ] };
+    key  <KP9> {         [        XF86Launch9,            XF86Launch9 ] };
     key <KPSU> {
         type= "CTRL+ALT",
-        symbols[Group1]= [     KP_Subtract,     KP_Subtract,     KP_Subtract,     KP_Subtract,  XF86Prev_VMode ]
+        symbols[Group1]= [     XF86Launch7,     XF86Launch7,     KP_Subtract,     KP_Subtract,  XF86Prev_VMode ]
     };
-    key  <KP4> {         [         KP_Left,            KP_4 ] };
-    key  <KP5> {         [        KP_Begin,            KP_5 ] };
-    key  <KP6> {         [        KP_Right,            KP_6 ] };
+    key  <KP4> {         [        XF86Launch8,            XF86Launch8 ] };
+    key  <KP5> {         [        XF86Launch4,            XF86Launch4 ] };
+    key  <KP6> {         [        XF86WebCam,            XF86WebCam ] };
     key <KPAD> {
         type= "CTRL+ALT",
-        symbols[Group1]= [          KP_Add,          KP_Add,          KP_Add,          KP_Add,  XF86Next_VMode ]
+        symbols[Group1]= [          U203D,          U203D,          KP_Add,          KP_Add,  XF86Next_VMode ]
     };
-    key  <KP1> {         [          KP_End,            KP_1 ] };
-    key  <KP2> {         [         KP_Down,            KP_2 ] };
-    key  <KP3> {         [         KP_Next,            KP_3 ] };
-    key  <KP0> {         [       KP_Insert,            KP_0 ] };
+    key  <KP1> {         [          XF86Mail,            XF86Mail ] };
+    key  <KP2> {         [         XF86Messenger,            XF86Messenger ] };
+    key  <KP3> {         [         XF86Search,            XF86Search ] };
+    key  <KP0> {         [       XF86Go,            XF86Go ] };
     key <KPDL> {         [       KP_Delete,      KP_Decimal ] };
     key <LVL3> {
         type= "ONE_LEVEL",
@@ -1501,7 +1535,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     key <RCTL> {         [       Control_R ] };
     key <KPDV> {
         type= "CTRL+ALT",
-        symbols[Group1]= [       KP_Divide,       KP_Divide,       KP_Divide,       KP_Divide,      XF86Ungrab ]
+        symbols[Group1]= [       XF86Shop,       XF86Shop,       KP_Divide,       KP_Divide,      XF86Ungrab ]
     };
     key <PRSC> {
         type= "PC_ALT_LEVEL2",
@@ -1644,7 +1678,6 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     modifier_map Shift { <RTSH> };
     modifier_map Mod1 { <LALT> };
     modifier_map Lock { <CAPS> };
-    modifier_map Mod2 { <NMLK> };
     modifier_map Mod5 { <LVL3> };
     modifier_map Control { <RCTL> };
     modifier_map Mod4 { <LWIN> };
@@ -1941,33 +1974,10 @@ xkb_geometry "pc(pc105)" {
         };
     }; // End of "Keypad" section
 
-    solid "LedPanel" {
-        top=      22;
-        left=     377;
-        priority= 0;
-        color= "grey10";
-        shape= "LEDS";
-    };
     indicator "Num Lock" {
         top=      37;
         left=     382;
         priority= 1;
-        onColor= "green";
-        offColor= "green30";
-        shape= "LED";
-    };
-    indicator "Caps Lock" {
-        top=      37;
-        left=     407;
-        priority= 2;
-        onColor= "green";
-        offColor= "green30";
-        shape= "LED";
-    };
-    indicator "Scroll Lock" {
-        top=      37;
-        left=     433;
-        priority= 3;
         onColor= "green";
         offColor= "green30";
         shape= "LED";
@@ -1980,24 +1990,6 @@ xkb_geometry "pc(pc105)" {
         height=  10;
         XFont= "-*-helvetica-medium-r-normal--*-120-*-*-*-*-iso8859-1";
         text=  "Num\nLock";
-    };
-    text "CapsLockLabel" {
-        top=      25;
-        left=     403;
-        priority= 5;
-        width=  26.4;
-        height=  10;
-        XFont= "-*-helvetica-medium-r-normal--*-120-*-*-*-*-iso8859-1";
-        text=  "Caps\nLock";
-    };
-    text "ScrollLockLabel" {
-        top=      25;
-        left=     428;
-        priority= 6;
-        width=  39.6;
-        height=  10;
-        XFont= "-*-helvetica-medium-r-normal--*-120-*-*-*-*-iso8859-1";
-        text=  "Scroll\nLock";
     };
 };
 

@@ -41,7 +41,8 @@ def callback(keystr, user_data):
 if __name__ == '__main__':
     Popen(["sh", "setkeymap.sh"])
     Keybinder.init()
+    Keybinder.set_use_cooked_accelerators(True)
     for keystr in keystrs.keys():
         Keybinder.bind(keystr, callback, "Keystring %s (user data)" % keystr)
-        print("Press", keystr, "to handle keybinding")
+        print("Press", keystr, "to handle ", keystrs[keystr])
     Gtk.main()
