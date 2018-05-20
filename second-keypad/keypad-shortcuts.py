@@ -81,6 +81,15 @@ elif arg == "leftfocus":
         if isleftmonitorwindow(w):
             w.activate(now)
             break
+elif arg == "loweractive":
+    # Lower the currently active window
+    ws = screen.get_windows()
+    for w in ws:
+        if w.is_active():
+            x, y = w.get_client_window_geometry()[:2]
+            from subprocess import Popen
+            Popen(["xdotool", "mousemove", "--sync", str(x + 40), str(y - 10), "click", "2", "mousemove", "restore"])
+            break
 elif arg == "leftkey" and len(sys.argv) == 3:
     # Send a key to the top window on my left (portrait) monitor
     key = sys.argv[2]
@@ -93,7 +102,7 @@ elif arg == "leftkey" and len(sys.argv) == 3:
 elif arg == "switchtomain":
     # Cycle through windows at the top left of the main monitor
     active = screen.get_active_window()
-    ws = [w for w in screen.get_windows() if ismainmonitorwindow(w)]
+    ws = [w for w in screen.get_windows() if ismainmonitorwindow(w) and not w.is_minimized()]
 
     if active in ws:
         i = ws.index(active)

@@ -1531,7 +1531,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     key <HENK> {         [     Henkan_Mode ] };
     key <HKTG> {         [ Hiragana_Katakana ] };
     key <MUHE> {         [        Muhenkan ] };
-    key <KPEN> {         [        KP_Enter ] };
+    key <KPEN> {         [        XF86Finance ] };
     key <RCTL> {         [       Control_R ] };
     key <KPDV> {
         type= "CTRL+ALT",
