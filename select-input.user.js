@@ -4,19 +4,34 @@
 // @grant        none
 // @match        *://*/*
 // @require      //ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+// @run-at       document-end
 // ==/UserScript==
 
-(function(window) {
+
+(function (window) {
     'use strict';
 
-    window.addEventListener ("keydown", keyboardHandler, false);
+    if (typeof window.$ == 'undefined') {
+        var arr = Object.getOwnPropertyNames(window);
+        for (var i in arr) {
+            if (arr[i].indexOf("jQuery") == 0) {
+                var jq = window[arr[i]];
+                //console.log("set jQuery: " + arr[i]);
+                break;
+            }
+        }
+    }
+    else
+        jq = window.$;
 
-    function keyboardHandler (zEvent) {
+    window.addEventListener("keydown", keyboardHandler, false);
+
+    function keyboardHandler(zEvent) {
         var bBlockDefaultAction = false;
 
         if (zEvent.altKey && zEvent.which === window.KeyEvent.DOM_VK_I) {
 
-            var firstInput = window.$("input:not(input[type=button],input[type=submit],select,button):visible:first");
+            var firstInput = jq("input:not(input[type=button],input[type=submit],select,button):visible:first");
             firstInput.focus();
             if (firstInput.scrollIntoView)
                 firstInput.scrollIntoView();
@@ -25,8 +40,8 @@
         }
 
         if (bBlockDefaultAction) {
-            zEvent.preventDefault ();
-            zEvent.stopPropagation ();
+            zEvent.preventDefault();
+            zEvent.stopPropagation();
         }
     }
 })(window);
