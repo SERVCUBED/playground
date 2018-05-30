@@ -7,25 +7,24 @@
 # XF86Mail      XF86Messenger   XF86Search      KP_Enter
 # XF86Go        XF86Go          KP_Delete       KP_Enter
 
-# Functions:
+# Key:          Function:                   Shifted (KP_Enter):
 # Escape        Escape
-# F17           switchtomain
-# F18           rofi windows
-# F19           Interrobang
+# KP_Divide     switchtomain                loweractive
+# KP_Multiply   rofi windows
+# KP_Subtract   xflock4                     setkeymap.sh
 # KP_Home       rofi
 # KP_Up         leftkey Up
 # KP_Page_Up    leftkey Page_Up
-# F20
-# KP_Left       leftkey ctrl+shift+Tab
+# KP_Left       leftkey ctrl+shift+Tab      Alt+Left
 # KP_Begin      leftfocus
-# KP_Right      leftkey ctrl+Tab
+# KP_Right      leftkey ctrl+Tab            Alt+Right
 # Backspace     Backspace
 # KP_End        mumblefocus
 # KP_Down       leftkey Down
 # KP_Page_Down  leftkey Page_Down
 # KP_Enter      KP_Enter
 # KP_Insert     messengerfocus
-# F16           Mumble push to talk
+# KP_Delete     Mumble push to talk
 
 import sys
 import wnck

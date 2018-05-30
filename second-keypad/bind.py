@@ -45,7 +45,7 @@ keystrs_shifted = {
     # KP_Multiply
     # 55: [py, ""],
     # KP_Subtract
-    # 74: [py, ""],
+    74: ["sh", "setkeymap.sh"],
     # KP_1
     # 79: [py, ""],
     # KP_2
