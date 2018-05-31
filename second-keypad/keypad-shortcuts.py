@@ -11,7 +11,7 @@
 # Escape        Escape
 # KP_Divide     switchtomain                loweractive
 # KP_Multiply   rofi windows
-# KP_Subtract   xflock4                     setkeymap.sh
+# KP_Subtract   setkeymap.sh                xflock4
 # KP_Home       rofi
 # KP_Up         leftkey Up
 # KP_Page_Up    leftkey Page_Up

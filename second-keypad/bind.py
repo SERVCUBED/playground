@@ -17,7 +17,7 @@ keystrs = {
     # KP_Multiply
     55: ["rofi", "-show", "window", "-display-window", "", "-fuzzy", "-window-format", "{w}: {t}"],
     # KP_Subtract
-    74: ["xflock4"],
+    74: ["sh", "setkeymap.sh"],
     # KP_1
     79: [py, "mumblefocus"],
     # KP_2
@@ -45,7 +45,7 @@ keystrs_shifted = {
     # KP_Multiply
     # 55: [py, ""],
     # KP_Subtract
-    74: ["sh", "setkeymap.sh"],
+    74: ["xflock4"],
     # KP_1
     # 79: [py, ""],
     # KP_2
