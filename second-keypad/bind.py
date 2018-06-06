@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import time
-
 import keyboard
 import threading
 from subprocess import Popen, PIPE
 
 shifted = False
+cmd_prefix = ['sudo', '-u', os.environ["SUDO_USER"]]
 id = str(Popen(['readlink', '-f', '/dev/input/by-id/usb-SEM_USB_Keyboard-event-kbd'], stdout=PIPE).communicate()[0])[
      2:-3]
 py = "/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py"
@@ -71,7 +72,7 @@ keystrs_shifted = {
 
 def start(keycode):
     global shifted
-    Popen(keystrs_shifted[keycode] if shifted and keycode in keystrs_shifted else keystrs[keycode])
+    Popen(cmd_prefix + (keystrs_shifted[keycode] if shifted and keycode in keystrs_shifted else keystrs[keycode]))
 
 
 def callback(keycode):
