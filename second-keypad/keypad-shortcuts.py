@@ -33,7 +33,7 @@ import gtk
 # Top left corner of left portrait monitor
 portraittopposition = [1, 28]
 # Top left corner of main monitor
-mainposition = [1080, 295]
+mainposition = [1080, 268]
 
 # Docs: https://developer.gnome.org/libwnck/stable/
 
