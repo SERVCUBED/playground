@@ -6,93 +6,119 @@
 #include <cstring>
 #include <cstdio>
 #include <thread>
-#include <gdk/gdkx.h>
+//#include <gdk/gdkx.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE = 1
-#include <libwnck-3.0/libwnck/libwnck.h>
+//#include <libwnck-3.0/libwnck/libwnck.h>
 
 // Top left corner of left portrait monitor
-const int portraittopposition[] = {1, 28};
+//const int portraittopposition[] = {1, 28};
 // Top left corner of main monitor
-const int mainposition[] = {1080, 268};
+//const int mainposition[] = {1080, 268};
 
 // Docs: https://developer.gnome.org/libwnck/stable/
 
-static const char *const evval[3] = {
-    "RELEASED",
-    "PRESSED ",
-    "REPEATED"
-};
+//static const char *const evval[3] = {
+//    "RELEASED",
+//    "PRESSED ",
+//    "REPEATED"
+//};
 static bool shifted = false;
-static WnckScreen* default_screen;
+//static WnckScreen* default_screen;
 
-const char* strtolower(char* in) {
-  for (int i=0; i < strlen (in); i++)
-    {
-      if (in[i] <= 'Z' && in[i] >= 'A')
-        in[i] = in[i] - ('Z' - 'z');
-    }
-  return in;
-}
+//char* strtolower(char* in) {
+//  for (int i=0; i < strlen (in); i++)
+//    {
+//      if (in[i] <= 'Z' && in[i] >= 'A')
+//        in[i] = in[i] - ('Z' - 'z');
+//    }
+//  return in;
+//}
 
-void focus_window_strstr (const char *str)
-{
-  wnck_screen_force_update (default_screen);
-  for (GList* windows = wnck_screen_get_windows (default_screen);
-       windows != nullptr; windows = windows->next)
-    {
-      auto* w = (WnckWindow*) windows->data;
-      if (strstr (strtolower(const_cast<char *>(wnck_window_get_name (w))), str) != nullptr)
-        {
-          wnck_window_activate (w, gdk_x11_get_server_time (gdk_get_default_root_window ()));
-          break;
-        }
-    }
-  //wnck_shutdown ();
-}
+//WnckWindow* find_window_strstr (const char *str)
+//{
+//  WnckScreen* s = wnck_screen_get_default ();
+//  wnck_screen_force_update (s);
+//  for (GList* windows = wnck_screen_get_windows_stacked (s);
+//       windows != nullptr; windows = windows->next)
+//    {
+//      auto* w = (WnckWindow*) windows->data;
+//      char * n = const_cast<char *>(wnck_window_get_name (w));
+//      printf ("%s\n", n);
+//      if (strstr (strtolower(n), str) != nullptr)
+//          return w;
+//    }
+//  printf ("No window found containing %s\n", str);
+//  //wnck_shutdown ();
+//  return nullptr;
+//}
 
-bool ismainmonitorwindow(WnckWindow* w)
-{
-  int x, y;
-  wnck_window_get_client_window_geometry (w, &x, &y, nullptr, nullptr);
-  return x == mainposition[0] and y == mainposition[1];
-}
+//void focus_window_strstr (const char *str)
+//{
+//  wnck_window_activate(find_window_strstr (str), gdk_x11_get_server_time (gdk_get_default_root_window ()));
+//}
 
-void switch_main_window ()
-{
-  wnck_screen_force_update (default_screen);
-  // Cycle through windows at the top left of the main monitor
-  WnckWindow* active = wnck_screen_get_active_window (default_screen);
-  auto * windows = new GList;
-  for (GList* w = wnck_screen_get_windows (default_screen); w != nullptr; w = w->next)
-    {
-      WnckWindow* wi = (WnckWindow*) w->data;
-      if (ismainmonitorwindow (wi) && !wnck_window_is_minimized (wi))
-          windows = g_list_append (windows, wi);
-    }
+//bool ismainmonitorwindow(WnckWindow* w)
+//{
+//  int x, y;
+//  wnck_window_get_client_window_geometry (w, &x, &y, nullptr, nullptr);
+//  return x == mainposition[0] && y == mainposition[1];
+//}
 
-  int i;
-  i = g_list_index (windows, active);
-  if (i >= 0)
-    i = (i == g_list_length (windows))? 0 : i;
-  else
-    i = g_list_length (windows) - 1;
-  for (; i < g_list_length (windows); i++)
-    {
-      auto* wi = (WnckWindow*) g_list_nth (windows, static_cast<guint>(i))->data;
-      if (!wnck_window_is_active (wi))
-        {
-          wnck_window_activate (wi, gdk_x11_get_server_time (gdk_get_default_root_window ()));
-          break;
-        }
+//void switch_main_window ()
+//{
+//  // Cycle through windows at the top left of the main monitor
+//  WnckWindow* active = wnck_screen_get_active_window (default_screen);
+//  auto * windows = new GList;
+//  for (GList* w = wnck_screen_get_windows (default_screen); w != nullptr; w = w->next)
+//    {
+//      WnckWindow* wi = (WnckWindow*) w->data;
+//      if (ismainmonitorwindow (wi) && !wnck_window_is_minimized (wi))
+//          windows = g_list_append (windows, wi);
+//    }
+//
+//  int i;
+//  i = g_list_index (windows, active);
+//  if (i >= 0)
+//    i = (i == g_list_length (windows))? 0 : i;
+//  else
+//    i = g_list_length (windows) - 1;
+//  for (; i < g_list_length (windows); i++)
+//    {
+//      auto* wi = (WnckWindow*) g_list_nth (windows, static_cast<guint>(i))->data;
+//      printf ("%s\n", wnck_window_get_name (wi));
+//      if (!wnck_window_is_most_recently_activated (wi))
+//        {
+//          printf ("Activating %s\n", wnck_window_get_name (wi));
+//          wnck_window_activate_transient (wi, gdk_x11_get_server_time (gdk_get_default_root_window ()));
+//          break;
+//        }
+//
+//    }
+//}
 
-    }
-}
+//void toggle_tidal_minimise()
+//{
+//  WnckWindow* w = find_window_strstr ("tidal");
+//  if (w == nullptr)
+//    {
+//      printf ("null window\n");
+//      return;
+//    }
+//  printf ("minimised: %d\n", wnck_window_is_minimized (w));
+//  if (wnck_window_is_minimized (w))
+//    wnck_window_unminimize (w, gdk_x11_get_server_time (gdk_get_default_root_window ()));
+//  else
+//    wnck_window_minimize (w);
+//}
 
 void parse_keycode (int keycode)
 {
-  printf ("Pressed %d", keycode);
+  printf ("Pressed %d\n", keycode);
+
+  //wnck_screen_force_update (default_screen);
   //GList* windows = gdk_screen_get_window_stack (default_screen);
+
   switch (keycode)
     {
 // KP_Divide
@@ -100,8 +126,8 @@ void parse_keycode (int keycode)
           if (shifted)
             std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py loweractive");
           else
-            //std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py switchtomain");
-            switch_main_window ();
+            std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py switchtomain");
+            //switch_main_window ();
         break;
 // KP_Multiply
       case 55:
@@ -116,8 +142,8 @@ void parse_keycode (int keycode)
         break;
 // KP_1
       case 79:
-        //std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py mumblefocus");
-        focus_window_strstr ("mumble -");
+        std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py mumblefocus");
+        //focus_window_strstr ("mumble -");
         break;
 // KP_2
       case 80:
@@ -159,8 +185,12 @@ void parse_keycode (int keycode)
         break;
 // KP_0
       case 82:
-        //std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py messengerfocus");
-        focus_window_strstr ("messenger");
+        if (shifted)
+          std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py tidaltoggle");
+          //toggle_tidal_minimise ();
+        else
+          std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py messengerfocus");
+          //focus_window_strstr ("messenger");
         break;
       default:
         printf ("Unhandled keycode %d", keycode);
@@ -174,11 +204,8 @@ int main (int argc, char* argv[])
   ssize_t n;
   int fd;
 
-  //TODO remove
-  setbuf (stdout, NULL);
-
-  gdk_init (&argc, &argv);
-  default_screen = wnck_screen_get_default ();
+  //gdk_init (&argc, &argv);
+  //default_screen = wnck_screen_get_default ();
 
   fd = open (dev, O_RDONLY);
   if (fd == -1)

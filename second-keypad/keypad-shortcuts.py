@@ -74,6 +74,17 @@ elif arg == "mumblefocus":
         if "Mumble --" in n:
             w.activate(now)
             break
+elif arg == "tidaltoggle":
+    # Focus messenger window
+    for w in screen.get_windows():
+        n = w.get_name()
+        # print(n)
+        if "TIDAL" in n:
+            if w.is_minimized():
+                w.unminimize(now)
+            else:
+                w.minimize()
+            break
 elif arg == "leftfocus":
     # Focus the window on the leftmost (portrait) monitor
     for w in screen.get_windows():
