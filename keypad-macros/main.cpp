@@ -136,7 +136,7 @@ void parse_keycode (int keycode)
 // KP_Subtract
       case 74:
         if (shifted)
-          std::system ("xflock4");
+          std::system ("xset dpms force off");
         else
           std::system ("cd /home/servc/git/my/playground/second-keypad/ && ./setkeymap.sh");
         break;
