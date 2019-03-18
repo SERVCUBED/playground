@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Make sure you add this file no NOPASSWD in visudo
+if [ "$EUID" -ne 0 ]; then
+  sudo $0 $1 "$2"
+  exit
+fi
+
+case ${1} in
+  0|1)
+    brightness=${1}
+    ;;
+  *)
+    echo "Invalid brightness"
+    exit
+    ;;
+esac
+
+if [[ -z "${2}" ]]; then
+  echo "Enter device name"
+  exit
+fi
+
+for led in /sys/class/leds/input*::numlock/; do [ "$(cat ${led}/device/name)" = "${2}" ] && (
+  echo "${brightness}" >| "${led}/brightness"
+); done

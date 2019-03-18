@@ -9,3 +9,5 @@ r_id=$(
 for r in $r_id; do
     xkbcomp -i $r keymap.xkb $DISPLAY
 done
+
+setnumlock 0 "SEM USB Keyboard"
