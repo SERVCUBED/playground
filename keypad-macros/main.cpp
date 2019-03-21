@@ -6,6 +6,8 @@
 #include <cstring>
 #include <cstdio>
 #include <thread>
+#include <csignal>
+#include <fstream>
 //#include <gdk/gdkx.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE = 1
@@ -123,12 +125,20 @@ void parse_keycode (int keycode)
     {
 // KP_Divide
       case 98:
+        {
+          std::fstream pidfile ("/tmp/i3-focus-last.pidfile", std::ios_base::in);
+          if (!pidfile.is_open ())
+            return;
+          int pid;
+          pidfile >> pid;
           if (shifted)
-            std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py loweractive");
+            kill (pid, SIGUSR2);
           else
-            std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py switchtomain");
-            //switch_main_window ();
-        break;
+            kill (pid, SIGUSR1);
+          pidfile.close ();
+          //switch_main_window ();
+          break;
+        }
 // KP_Multiply
       case 55:
         std::system ("rofi -show window -display-window \uF1D8 -fuzzy -window-format '{w}: {t}'");
