@@ -114,6 +114,16 @@ static bool shifted = false;
 //    wnck_window_minimize (w);
 //}
 
+void send_i3_focus_last(int signal) {
+  std::fstream pidfile ("/tmp/i3-focus-last.pidfile", std::ios_base::in);
+  if (!pidfile.is_open ())
+    return;
+  int pid;
+  pidfile >> pid;
+  kill (pid, signal);
+  pidfile.close ();
+}
+
 void parse_keycode (int keycode)
 {
   printf ("Pressed %d\n", keycode);
@@ -125,20 +135,8 @@ void parse_keycode (int keycode)
     {
 // KP_Divide
       case 98:
-        {
-          std::fstream pidfile ("/tmp/i3-focus-last.pidfile", std::ios_base::in);
-          if (!pidfile.is_open ())
-            return;
-          int pid;
-          pidfile >> pid;
-          if (shifted)
-            kill (pid, SIGUSR2);
-          else
-            kill (pid, SIGUSR1);
-          pidfile.close ();
-          //switch_main_window ();
-          break;
-        }
+        std::system ("rofi -show drun -display-drun \uF1D8 -fuzzy");
+        break;
 // KP_Multiply
       case 55:
         std::system ("rofi -show window -display-window \uF1D8 -fuzzy -window-format '{w}: {t}'");
@@ -168,22 +166,22 @@ void parse_keycode (int keycode)
         if (shifted)
           std::system ("xdotool key Alt+Left");
         else
-          std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py leftkey ctrl+shift+Tab");
+          std::system ("i3-msg workspace prev");
         break;
 // KP_5
       case 76:
-        std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py leftfocus");
+        send_i3_focus_last (SIGUSR1); // Focus last
         break;
 // KP_6
       case 77:
         if (shifted)
           std::system ("xdotool key Alt+Right");
         else
-          std::system ("/home/servc/git/my/playground/second-keypad/keypad-shortcuts.py leftkey ctrl+Tab");
+          std::system ("i3-msg workspace next");
         break;
 // KP_7
       case 71:
-        std::system ("rofi -show drun -display-drun \uF1D8 -fuzzy");
+        send_i3_focus_last (SIGUSR2); // Focus top
         break;
 // KP_8
       case 72:
