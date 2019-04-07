@@ -58,6 +58,7 @@ void parse_keycode (int keycode)
         break;
 // KP_2
       case 80:
+        send_i3_focus_last ("fb\n"); // Focus bottom
         break;
 // KP_3
       case 81:
