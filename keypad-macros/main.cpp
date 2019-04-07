@@ -62,6 +62,7 @@ void parse_keycode (int keycode)
         break;
 // KP_3
       case 81:
+        std::system ("/home/servc/git/my/playground/keypad-macros/focus-window-strstr '[vim] notepad'");
         break;
 // KP_4
       case 75:
