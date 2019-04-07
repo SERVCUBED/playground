@@ -22,14 +22,13 @@
 static bool shifted = false;
 
 // https://github.com/SERVCUBED/i3-focus-last
-void send_i3_focus_last(int signal) {
-  std::fstream pidfile ("/tmp/i3-focus-last.pidfile", std::ios_base::in);
-  if (!pidfile.is_open ())
-    return;
-  int pid;
-  pidfile >> pid;
-  kill (pid, signal);
-  pidfile.close ();
+void send_i3_focus_last(const char *cmd) {
+  int fd = open ("/tmp/i3-focus-last.pipe", O_WRONLY);
+  if (fd != -1)
+    {
+      write (fd, cmd, strlen (cmd));
+      close (fd);
+    }
 }
 
 void parse_keycode (int keycode)
@@ -72,7 +71,7 @@ void parse_keycode (int keycode)
         break;
 // KP_5
       case 76:
-        send_i3_focus_last (SIGUSR1); // Focus last
+        send_i3_focus_last ("fl\n"); // Focus last
         break;
 // KP_6
       case 77:
@@ -83,21 +82,21 @@ void parse_keycode (int keycode)
         break;
 // KP_7
       case 71:
-        std::system ("i3-msg focus output DP-4");
-        if (shifted)
-          send_i3_focus_last (SIGUSR2); // Focus top
+        send_i3_focus_last ("ft\n"); // Focus top
         break;
 // KP_8
       case 72:
-        std::system ("i3-msg focus output DP-2");
         if (shifted)
-          send_i3_focus_last (SIGUSR2); // Focus top
+          send_i3_focus_last ("ftoDP-2\n"); // Focus top
+        else
+          std::system ("i3-msg focus output DP-2");
         break;
 // KP_9
       case 73:
-        std::system ("i3-msg focus output DP-0");
         if (shifted)
-          send_i3_focus_last (SIGUSR2); // Focus top
+          send_i3_focus_last ("ftoDP-0\n"); // Focus top
+        else
+          std::system ("i3-msg focus output DP-0");
         break;
 // KP_0
       case 82:
