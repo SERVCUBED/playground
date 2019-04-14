@@ -29,6 +29,8 @@ void send_i3_focus_last(const char *cmd) {
       write (fd, cmd, strlen (cmd));
       close (fd);
     }
+  else
+    fprintf (stderr, "Cannot open i3-focus-last pipe: %s\n", strerror (errno));
 }
 
 void parse_keycode (int keycode)
@@ -62,7 +64,7 @@ void parse_keycode (int keycode)
         break;
 // KP_3
       case 81:
-        std::system ("/home/servc/git/my/playground/keypad-macros/focus-window-strstr '[vim] notepad'");
+        std::system ("/usr/local/bin/vimnotepad");
         break;
 // KP_4
       case 75:

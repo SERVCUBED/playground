@@ -1507,7 +1507,7 @@ xkb_symbols "pc+gb(dvorakukp)+gb:2+inet(evdev)" {
     };
     key  <KP1> {         [          XF86Mail,            XF86Mail ] };
     key  <KP2> {         [         XF86Messenger,            XF86Messenger ] };
-    key  <KP3> {         [         XF86Search,            XF86Search ] };
+    key  <KP3> {         [         VoidSymbol,            VoidSymbol ] };
     key  <KP0> {         [       XF86Go,            XF86Go ] };
     key <KPDL> {         [       KP_Delete,      KP_Decimal ] };
     key <LVL3> {
