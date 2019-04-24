@@ -7,7 +7,7 @@ extern "C" {
 #include <xcb/xcb_aux.h>
 }
 
-#ifdef DEBUG
+#if CMAKE_BUILD_TYPE==Debug
 #define DEBUG_MSG(str) std::cout << str << std::endl
 #else
 #define DEBUG_MSG(str) 0
@@ -89,19 +89,24 @@ class mainwindow : public Gtk::Window {
           }
 
         if (h < 100 || w < 100)
-          {
-            performClick = true;
-            close ();
-            return true;
-          }
+            goto PERFORMCLICK;
 
         resize (w, h);
         move (x, y);
         set_text_size ();
         return true;
       }
+      if (key_event->keyval == GDK_KEY_KP_Decimal)
+        goto PERFORMCLICK;
 
     return false;
+
+PERFORMCLICK:
+    // Input device should not be controlled inside a key_press event,
+    // Set signal for caller instead.
+    performClick = true;
+    close ();
+    return true;
   }
 
   void set_text_size ()
