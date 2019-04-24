@@ -104,6 +104,9 @@ void parse_keycode (int keycode)
         break;
 // KP_0
       case 82:
+        if (shifted)
+          std::system ("/home/servc/git/my/playground/keypad-macros/mouse-do");
+        else
           std::system ("xdotool click 1");
         break;
       default:
