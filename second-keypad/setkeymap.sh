@@ -12,8 +12,8 @@ do_for_dev(){
 	[ "$r_id" ] || { echo "No device matching $dev_re"; return; }
 
 	for r in $r_id; do
-		echo "$dev_cmd"
-		eval "$dev_cmd"
+		echo "${dev_cmd@P}"
+		eval "${dev_cmd}"
 	done
 }
 
