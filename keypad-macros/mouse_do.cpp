@@ -58,6 +58,7 @@ class mainwindow : public Gtk::Window {
   bool on_key (GdkEventKey *key_event)
   {
     DEBUG_MSG("key:" << key_event->string << ": " << key_event->keyval);
+
     if (key_event->keyval == GDK_KEY_Escape)
       {
         close ();
@@ -91,8 +92,7 @@ class mainwindow : public Gtk::Window {
         if (h < 100 || w < 100)
             goto PERFORMCLICK;
 
-        resize (w, h);
-        move (x, y);
+        gdk_window_move_resize (GDK_WINDOW (key_event->window), x, y, w, h);
         set_text_size ();
         return true;
       }
