@@ -93,14 +93,14 @@ void parse_keycode (int keycode)
         if (shifted)
           send_i3_focus_last ("ftoDP-2\n"); // Focus top
         else
-          std::system ("i3-msg focus output DP-2");
+          send_i3_focus_last ("floDP-2\n"); // Focus last
         break;
 // KP_9
       case 73:
         if (shifted)
           send_i3_focus_last ("ftoDP-0\n"); // Focus top
         else
-          std::system ("i3-msg focus output DP-0");
+          send_i3_focus_last ("floDP-0\n"); // Focus last
         break;
 // KP_0
       case 82:
