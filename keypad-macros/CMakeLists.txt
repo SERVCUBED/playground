@@ -35,3 +35,7 @@ include_directories(notify-usage ${GDK_LIBRARIES} ${LIBNOTIFY_INCLUDE_DIRS})
 add_executable(mouse-do mouse_do.cpp)
 target_link_libraries(mouse-do ${GTKMM_LIBRARIES} ${XCB_LIBRARIES})
 include_directories(mouse-do ${GTKMM_INCLUDE_DIRS} ${XCB_INCLUDE_DIRS})
+
+add_executable(warn-bar warn-bar.cpp)
+target_link_libraries(warn-bar ${GTKMM_LIBRARIES} ${XCB_LIBRARIES})
+include_directories(warn-bar ${GTKMM_INCLUDE_DIRS} ${XCB_INCLUDE_DIRS})
