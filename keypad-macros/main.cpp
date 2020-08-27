@@ -128,7 +128,12 @@ int main (int argc, char* argv[])
       return EXIT_FAILURE;
     }
 
-  parse_keycode (74); // Set keymap initially
+  // Grab
+  if (ioctl (fd, EVIOCGRAB, 1) < 0)
+    {
+      fprintf (stderr, "Cannot grab %s: %s.\n", dev, strerror (errno));
+    }
+  //parse_keycode (74); // Set keymap initially
 
   while (true)
     {
@@ -146,6 +151,7 @@ int main (int argc, char* argv[])
           errno = EIO;
           printf ("IO Error. Retrying in 5 seconds...");
           std::this_thread::sleep_for (std::chrono::seconds (5));
+          continue;
         }
 
       if (ev.type == EV_KEY && ev.value >= 0 && ev.value <= 2)
