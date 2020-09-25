@@ -16,7 +16,7 @@ extern "C" {
 class mainwindow : public Gtk::Window {
  public:
   int x, y, w, h;
-  bool performClick = false;
+  int8_t performClick = -1;
 
   mainwindow ()
   {
@@ -64,6 +64,23 @@ class mainwindow : public Gtk::Window {
         close ();
         return true;
       }
+    if (this->performClick == 0) {
+        if (key_event->keyval >= GDK_KEY_KP_0 && key_event->keyval <= GDK_KEY_KP_9)
+          {
+            this->performClick = key_event->keyval - GDK_KEY_KP_0 + XCB_BUTTON_INDEX_ANY;
+            DEBUG_MSG("Using button: " << this->performClick);
+            close ();
+            return true;
+          }
+        this->performClick = -1;
+        return false;
+    }
+    if (key_event->keyval == GDK_KEY_KP_0)
+      {
+        DEBUG_MSG ("Select button");
+        this->performClick = 0;
+        return true;
+      }
     if (key_event->keyval >= GDK_KEY_KP_1 && key_event->keyval <= GDK_KEY_KP_9)
       {
         DEBUG_MSG("handled");
@@ -104,7 +121,7 @@ class mainwindow : public Gtk::Window {
 PERFORMCLICK:
     // Input device should not be controlled inside a key_press event,
     // Set signal for caller instead.
-    performClick = true;
+    performClick = XCB_BUTTON_INDEX_1;
     close ();
     return true;
   }
@@ -131,7 +148,7 @@ main (int argc,
   mainwindow window;
   int status = app->run (window);
 
-  if (window.performClick)
+  if (window.performClick != -1)
     {
       // TODO mouse click in centre of region
       DEBUG_MSG("Clicking");
@@ -139,9 +156,12 @@ main (int argc,
       xcb_connection_t *dpy = xcb_connect (NULL, &default_screen);
       xcb_test_fake_input (dpy, XCB_MOTION_NOTIFY, false, XCB_CURRENT_TIME, XCB_NONE, (int16_t) (
           window.x + window.w / 2), (int16_t) (window.y + window.h / 2), 0);
-      xcb_test_fake_input (dpy, XCB_BUTTON_PRESS, XCB_BUTTON_INDEX_1, XCB_CURRENT_TIME, XCB_NONE, 0, 0, 0);
-      std::this_thread::sleep_for (std::chrono::operator ""ms (100));
-      xcb_test_fake_input (dpy, XCB_BUTTON_RELEASE, XCB_BUTTON_INDEX_1, XCB_CURRENT_TIME, XCB_NONE, 0, 0, 0);
+      if (window.performClick > XCB_BUTTON_INDEX_ANY)
+        {
+          xcb_test_fake_input (dpy, XCB_BUTTON_PRESS, window.performClick, XCB_CURRENT_TIME, XCB_NONE, 0, 0, 0);
+          std::this_thread::sleep_for (std::chrono::operator ""ms (50));
+          xcb_test_fake_input (dpy, XCB_BUTTON_RELEASE, window.performClick, XCB_CURRENT_TIME, XCB_NONE, 0, 0, 0);
+        }
       xcb_aux_sync (dpy);
       xcb_disconnect (dpy);
     }
