@@ -73,12 +73,14 @@ class mainwindow : public Gtk::Window {
             return true;
           }
         this->performClick = -1;
+        this->set_display_choose_button (false);
         return false;
     }
     if (key_event->keyval == GDK_KEY_KP_0)
       {
         DEBUG_MSG ("Select button");
         this->performClick = 0;
+        this->set_display_choose_button (true);
         return true;
       }
     if (key_event->keyval >= GDK_KEY_KP_1 && key_event->keyval <= GDK_KEY_KP_9)
@@ -134,6 +136,19 @@ PERFORMCLICK:
 
     for (int i = 8; i >= 0; --i)
       labels[i].set_attributes (pg_attr_list);
+  }
+
+  inline void set_display_choose_button(const bool enabled)
+  {
+    if (enabled)
+      this->labels[4].set_text ("*");
+    else
+      this->labels[4].set_text ("5");
+    for (int i = 0; i < 9; ++i)
+      {
+        if (__glibc_unlikely (i != 4))
+          this->labels[i].set_opacity(1 - 0.8 * enabled);
+      }
   }
 
   Gtk::Grid grid;
