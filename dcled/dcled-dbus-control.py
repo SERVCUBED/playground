@@ -41,7 +41,7 @@ def notifications(bus, message):
                     print("Is MPRIS track title PropertiesChanged")
                     text = args[1]["Metadata"]["xesam:title"]
                     if "xesam:artist" in args[1]["Metadata"] and args[1]["Metadata"]["xesam:artist"] != "":
-                        text += " - " + args[1]["Metadata"]["xesam:artist"]
+                        text += " - " + args[1]["Metadata"]["xesam:artist"][0]
                     show("Now playing: " + text)
 
                 # Spec:
