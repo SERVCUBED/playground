@@ -1,4 +1,4 @@
-#include <gtkmm-3.0/gtkmm.h>
+#include <gtkmm.h>
 #include <iostream>
 #include <thread>
 

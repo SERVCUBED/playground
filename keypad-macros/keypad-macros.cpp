@@ -39,76 +39,7 @@ void parse_keycode (int keycode)
 
   switch (keycode)
     {
-// KP_Divide
-      case 98:
-        std::system ("rofi -show drun -display-drun \uF1D8 -fuzzy");
-        break;
-// KP_Multiply
-      case 55:
-        std::system ("rofi -show window -display-window \uF1D8 -fuzzy -window-format '{w}: {t}'");
-        break;
-// KP_Subtract
-      case 74:
-        if (shifted)
-          std::system ("xset dpms force off");
-        else
-          std::system ("cd /home/servc/git/my/playground/second-keypad/ && ./setkeymap.sh");
-        break;
-// KP_1
-      case 79:
-        std::system ("/home/servc/git/my/playground/keypad-macros/focus-window-strstr telegram");
-        break;
-// KP_2
-      case 80:
-        send_i3_focus_last ("fb\n"); // Focus bottom
-        break;
-// KP_3
-      case 81:
-        std::system ("/usr/local/bin/vimnotepad");
-        break;
-// KP_4
-      case 75:
-        if (shifted)
-          std::system ("xdotool key Alt+Left");
-        else
-          std::system ("i3-msg focus parent focus left focus child");
-        break;
-// KP_5
-      case 76:
-        send_i3_focus_last ("fl\n"); // Focus last
-        break;
-// KP_6
-      case 77:
-        if (shifted)
-          std::system ("xdotool key Alt+Right");
-        else
-          std::system ("i3-msg focus parent focus right focus child");
-        break;
-// KP_7
-      case 71:
-        send_i3_focus_last ("ft\n"); // Focus top
-        break;
-// KP_8
-      case 72:
-        if (shifted)
-          send_i3_focus_last ("ftoDP-2\n"); // Focus top
-        else
-          send_i3_focus_last ("floDP-2\n"); // Focus last
-        break;
-// KP_9
-      case 73:
-        if (shifted)
-          send_i3_focus_last ("ftoDP-0\n"); // Focus top
-        else
-          send_i3_focus_last ("floDP-0\n"); // Focus last
-        break;
-// KP_0
-      case 82:
-        if (shifted)
-          std::system ("/home/servc/git/my/playground/keypad-macros/mouse-do");
-        else
-          std::system ("xdotool click 1");
-        break;
+#include "keypad-macros.config.h"
       default:
         printf ("Unhandled keycode %d", keycode);
     }

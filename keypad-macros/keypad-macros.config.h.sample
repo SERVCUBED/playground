@@ -1,0 +1,86 @@
+/*
+ * Sample config file for keypad_macros.
+ *
+ * Rename to keypad_macros.config.h and edit to add your settings accordingly.
+ *
+ * Use the format of inside a switch statement, using "case" for each integer
+ * key number. You can test for the variable "switched" to determine if
+ * KP_Enter is being held down.
+ */
+
+// Num_lock
+case 69:
+  if (shifted)
+    std::system ("xdotool key Num_Lock &");
+  else
+    std::system ("xdotool key Escape &");
+  break;
+// KP_Divide
+case 98:
+  std::system ("rofi -show drun -display-drun \uF1D8 -fuzzy &");
+  break;
+// KP_Multiply
+case 55:
+  if (shifted)
+    std::system ("xscreensaver-command -lock &");
+  else
+    std::system ("rofi -show window -display-window \uF1D8 -fuzzy -window-format '{w}: {t}' &");
+  break;
+// KP_Subtract
+case 74:
+  if (shifted)
+    std::system ("xset dpms force off &");
+  break;
+// KP_1
+case 79:
+  break;
+// KP_2
+case 80:
+  send_i3_focus_last ("fb\n"); // Focus bottom
+  break;
+// KP_3
+case 81:
+  break;
+// KP_4
+case 75:
+  if (shifted)
+    std::system ("xdotool key Alt+Left &");
+  else
+    std::system ("i3-msg focus parent focus left focus child &");
+  break;
+// KP_5
+case 76:
+  send_i3_focus_last ("fl\n"); // Focus last
+  break;
+// KP_6
+case 77:
+  if (shifted)
+    std::system ("xdotool key Alt+Right &");
+  else
+    std::system ("i3-msg focus parent focus right focus child &");
+  break;
+// KP_7
+case 71:
+  send_i3_focus_last ("ft\n"); // Focus top
+  break;
+// KP_8
+case 72:
+  if (shifted)
+    send_i3_focus_last ("ftoDP-2\n"); // Focus top
+  else
+    send_i3_focus_last ("floDP-2\n"); // Focus last
+  break;
+// KP_9
+case 73:
+  if (shifted)
+    send_i3_focus_last ("ftoDP-0\n"); // Focus top
+  else
+    send_i3_focus_last ("floDP-0\n"); // Focus last
+  break;
+// KP_0
+case 82:
+  if (shifted)
+    std::system ("/home/servc/git/my/playground/keypad-macros/mouse-do &");
+  else
+    std::system ("xdotool click 1 &");
+  break;
