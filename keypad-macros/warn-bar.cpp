@@ -26,8 +26,8 @@ class mainwindow : public Gtk::Window {
 
     Gdk::Rectangle rect;
     screen->get_monitor_geometry (mnum, rect);
-    move(rect.get_x (), rect.get_y ());
-    resize(rect.get_width (), height);
+    move (rect.get_x (), rect.get_y ());
+    resize (rect.get_width (), height);
 
     set_decorated (false);
     set_has_resize_grip (false);
@@ -35,7 +35,7 @@ class mainwindow : public Gtk::Window {
 
     DEBUG_MSG ("Message: " << text);
     label.set_text (text);
-    add(label);
+    add (label);
     set_text_size (height);
 
     // TODO: Set window background colour to yellow
@@ -61,6 +61,8 @@ class mainwindow : public Gtk::Window {
     return false;
   }
 
+ private:
+
   void set_text_size (int h)
   {
     Pango::AttrList pg_attr_list;
@@ -73,29 +75,46 @@ class mainwindow : public Gtk::Window {
   Gtk::Label label;
 };
 
+static
+void handle_timeout (Glib::RefPtr<Gtk::Application> * app)
+{
+   g_info ("Quitting due to local timeout");
+   app->get()->quit();
+}
+
 int
 main (int argc,
       char **argv)
 {
   int mnum = 0, texti = 0, height = 200;
+  guint timeout = 0;
   if (argc < 2)
     {
-      std::cerr << "Usage: " << argv[0] << " [-n=<Monitor number=0>] [-h=<Height=200>] <Message>" << std::endl;
+exit_argerr:
+      std::cerr << "Usage: " << argv[0] << " [-n=<Monitor number=0>] [-h=<Height=200>] [-t=<Timeout (milliseconds)=0 (Unset)>] <Message>" << std::endl;
       return EXIT_FAILURE;
     }
   for (int i = 1; i < argc; ++i)
     {
       if (argv[i][0] == '-')
         {
-          if (argv[i][1] == 'n' && argv[i][2] == '=')
+          switch (argv[i][1])
             {
-              DEBUG_MSG ("Monitor number: " << (argv[i] + 3));
-              mnum = std::stoi (argv[i] + 3);
-            }
-          else if (argv[i][1] == 'h' && argv[i][2] == '=')
-            {
-              DEBUG_MSG ("Height: " << (argv[i] + 3));
-              height = std::stoi (argv[i] + 3);
+              case 'n':
+                DEBUG_MSG ("Monitor number: " << (argv[i] + 3));
+                mnum = std::stoi (argv[i] + 3);
+                break;
+              case 'h':
+                DEBUG_MSG ("Height: " << (argv[i] + 3));
+                height = std::stoi (argv[i] + 3);
+                break;
+              case 't':
+                DEBUG_MSG ("Timeout: " << (argv[i] + 3) << "ms");
+                timeout = std::stoi (argv[i] + 3);
+                break;
+              default:
+                g_error("Unknown argument -%c\n", argv[i][1]);
+                goto exit_argerr;
             }
         }
       else
@@ -105,5 +124,7 @@ main (int argc,
   int argc1 = 1;
   Glib::RefPtr<Gtk::Application> app = Gtk::Application::create (argc1, argv, "org.servc.warnbar");
   mainwindow window(mnum, argv[texti], height);
+  if (timeout > 0)
+    g_timeout_add(timeout, G_SOURCE_FUNC (&handle_timeout), &app);;
   return app->run (window);
 }
