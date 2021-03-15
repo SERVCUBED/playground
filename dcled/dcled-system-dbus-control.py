@@ -1,15 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-try:
-    from gi.repository import GObject
-except ImportError:
-    import gobject as GObject
-
-import sys
-import dbus
-import threading
 from subprocess import Popen
+import sys
+import threading
+
+import dbus
 from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import GLib
 
 ps = None
 
@@ -38,15 +35,13 @@ def sysnotifications(bus, message):
         print(str(sys.exc_info()))
 
 
-DBusGMainLoop(set_as_default=True)
-
-sysbus = dbus.SystemBus()
+sysbus = dbus.SystemBus(mainloop=DBusGMainLoop(set_as_default=True))
 sysbus.add_match_string_non_blocking("eavesdrop=true, interface='org.freedesktop.DBus.Properties', "
                                      "member='PropertiesChanged'")
 sysbus.add_message_filter(sysnotifications)
 
 try:
-    mainloop = GObject.MainLoop()
+    mainloop = GLib.MainLoop()
     mainloop.run()
 except KeyboardInterrupt:
     print("Keyboard interrupt")

@@ -1,16 +1,14 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-try:
-    from gi.repository import GObject
-except ImportError:
-    import gobject as GObject
-
-import sys
-import dbus
-import threading
 from subprocess import Popen
-from dbus.mainloop.glib import DBusGMainLoop
+import sys
+import threading
 
+import dbus
+from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import GLib
+
+onlySummarySenders = sys.argv[1:]
 
 ps = None
 
@@ -19,6 +17,8 @@ def tshow(text):
     global ps
     if ps is not None and ps.poll() is None:
         return
+    # Copy showdcledmessage to PATH and set NOPASSWD in /etc/sudoers
+    # (Make sure to change ownership of file to avoid unwanted changes which can be run as root)
     ps = Popen(["sudo", "showdcledmessage", text])
 
 
@@ -30,10 +30,10 @@ def notifications(bus, message):
     args = message.get_args_list()
     # print([arg for arg in args])
     try:
-        if message.get_member() == "Notify" and args[4] != "":
+        if message.get_member() == "Notify" and args[3] != "":
             # Is notification
             print("Is Notify")
-            show(args[3] + " - " + args[4] if len(args[4]) < 50 else args[4][:50] + "...")
+            show(args[3] + ((" - " + args[4] if len(args[4]) < 50 else args[4][:50] + "...") if (args[0] not in onlySummarySenders and args[4] != "") else ""))
         elif message.get_member() == "PropertiesChanged":
             # Is mpris property change
             if args[0] == "org.mpris.MediaPlayer2.Player":
@@ -64,16 +64,16 @@ def notifications(bus, message):
         print(str(sys.exc_info()))
 
 
-DBusGMainLoop(set_as_default=True)
 
-bus = dbus.SessionBus()
+
+bus = dbus.SessionBus(mainloop=DBusGMainLoop(set_as_default=True))
 bus.add_match_string_non_blocking("eavesdrop=true, interface='org.freedesktop.Notifications', member='Notify'")
 bus.add_match_string_non_blocking("eavesdrop=true, interface='org.freedesktop.DBus.Properties', "
                                   "member='PropertiesChanged'")
 bus.add_message_filter(notifications)
 
 try:
-    mainloop = GObject.MainLoop()
+    mainloop = GLib.MainLoop()
     mainloop.run()
 except KeyboardInterrupt:
     print("Keyboard interrupt")
