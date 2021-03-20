@@ -91,7 +91,7 @@ main (int argc,
   if (argc < 2)
     {
 exit_argerr:
-      std::cerr << "Usage: " << argv[0] << " [-n=<Monitor number=0>] [-h=<Height=200>] [-t=<Timeout (milliseconds)=0 (Unset)>] <Message>" << std::endl;
+      std::cerr << "Usage: " << argv[0] << " [-n=<Monitor number=0>] [-h=<Height=200>] [-t=<Timeout (milliseconds)=0 (Unset)>] [-b[=print]] <Message>" << std::endl;
       return EXIT_FAILURE;
     }
   for (int i = 1; i < argc; ++i)
@@ -112,6 +112,17 @@ exit_argerr:
                 DEBUG_MSG ("Timeout: " << (argv[i] + 3) << "ms");
                 timeout = std::stoi (argv[i] + 3);
                 break;
+              case 'b':
+                DEBUG_MSG ("Forking");
+                pid_t pid;
+                pid = fork();
+                if (pid == -1)
+                    g_error ("Error forking to background");
+                if (pid == 0)
+                  break;
+                if (*(argv[i]+2) == '=' && *(argv[i]+3) == 'p')
+                  fprintf (stdout, "%d\n", pid);
+                return EXIT_SUCCESS;
               default:
                 g_error("Unknown argument -%c\n", argv[i][1]);
                 goto exit_argerr;
