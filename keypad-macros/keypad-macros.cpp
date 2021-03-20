@@ -22,8 +22,9 @@
 static bool shifted = false;
 
 // https://github.com/SERVCUBED/i3-focus-last
+char i3flpipe[100];
 void send_i3_focus_last(const char *cmd) {
-  int fd = open ("/tmp/i3-focus-last.pipe", O_WRONLY);
+  int fd = open (i3flpipe, O_WRONLY);
   if (fd != -1)
     {
       write (fd, cmd, strlen (cmd));
@@ -50,6 +51,7 @@ int main (int argc, char* argv[])
   const char* dev = "/dev/input/by-id/usb-SEM_USB_Keyboard-event-kbd";
   struct input_event ev;
   ssize_t n;
+  uid_t  uid;
   int fd;
 
   fd = open (dev, O_RDONLY);
@@ -65,6 +67,10 @@ int main (int argc, char* argv[])
       fprintf (stderr, "Cannot grab %s: %s.\n", dev, strerror (errno));
     }
   //parse_keycode (74); // Set keymap initially
+
+  // i3-focus-last
+  uid = getuid();
+  sprintf (i3flpipe, "/run/user/%d/i3-focus-last.sock", uid);
 
   while (true)
     {
